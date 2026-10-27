@@ -21,7 +21,15 @@ if (!isset($content))     $content     = '';
             <img src="/DM-KOROCHKI/korochki/media/image02.jpg" alt="Логотип">
         </a>
         <h1 class="site-title">Корочки.есть</h1>
-        <nav class="header-nav">
+
+        <!-- Кнопка бургер-меню -->
+        <button type="button" class="burger" id="burgerBtn" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="header-nav" id="headerNav">
             <?php foreach ($nav_buttons as $btn): ?>
                 <a href="<?= htmlspecialchars($btn['url']) ?>"
                    class="nav-btn <?= !empty($btn['active']) ? 'active' : '' ?>">

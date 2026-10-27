@@ -12,27 +12,21 @@ $pdo = db_connect();
 $errors = [];
 $success = false;
 
-$courseId   = '';
-$dataNach   = '';
-$paymentId  = '';
+$courseId  = '';
+$dataNach  = '';
+$paymentId = '';
 
-$kursi   = $pdo->query('SELECT id_kursi, kurs FROM kursi ORDER BY kurs')->fetchAll();
-$oplati  = $pdo->query('SELECT id_oplati, oplata FROM oplati ORDER BY oplata')->fetchAll();
+$kursi  = $pdo->query('SELECT id_kursi, kurs FROM kursi ORDER BY kurs')->fetchAll();
+$oplati = $pdo->query('SELECT id_oplati, oplata FROM oplati ORDER BY oplata')->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $courseId  = (int)($_POST['course_id']  ?? 0);
     $dataNach  = trim($_POST['data_nach']   ?? '');
     $paymentId = (int)($_POST['payment_id'] ?? 0);
 
-    if ($courseId <= 0) {
-        $errors['course_id'] = 'Выберите курс';
-    }
-    if ($dataNach === '') {
-        $errors['data_nach'] = 'Укажите дату начала обучения';
-    }
-    if ($paymentId <= 0) {
-        $errors['payment_id'] = 'Выберите способ оплаты';
-    }
+    if ($courseId <= 0) $errors['course_id'] = 'Выберите курс';
+    if ($dataNach === '') $errors['data_nach'] = 'Укажите дату';
+    if ($paymentId <= 0) $errors['payment_id'] = 'Выберите способ оплаты';
 
     if (empty($errors)) {
         $stmt = $pdo->prepare("INSERT INTO zayvka (course_id, data_nach, payment_id, status_id, user_id)
@@ -66,14 +60,14 @@ ob_start();
 
         <?php if ($success): ?>
             <div class="success-message">
-                <p>✅ Заявка успешно создана!</p>
+                <p>✅ Заявка создана!</p>
                 <p><a href="zayvki.php">Просмотреть заявки</a></p>
             </div>
         <?php else: ?>
 
         <form class="auth-form" method="POST" action="new_zayvka.php" novalidate>
             <div class="form-group">
-                <label for="course_id">Наименование курса</label>
+                <label for="course_id">Курс</label>
                 <select id="course_id" name="course_id"
                         class="<?= isset($errors['course_id']) ? 'is-invalid' : '' ?>" required>
                     <option value="">-- Выберите курс --</option>
@@ -90,7 +84,7 @@ ob_start();
             </div>
 
             <div class="form-group">
-                <label for="data_nach">Желаемая дата начала обучения</label>
+                <label for="data_nach">Дата начала</label>
                 <input type="date" id="data_nach" name="data_nach"
                        value="<?= htmlspecialchars($dataNach) ?>"
                        class="<?= isset($errors['data_nach']) ? 'is-invalid' : '' ?>" required>
@@ -103,7 +97,7 @@ ob_start();
                 <label for="payment_id">Способ оплаты</label>
                 <select id="payment_id" name="payment_id"
                         class="<?= isset($errors['payment_id']) ? 'is-invalid' : '' ?>" required>
-                    <option value="">-- Выберите способ оплаты --</option>
+                    <option value="">-- Выберите --</option>
                     <?php foreach ($oplati as $o): ?>
                         <option value="<?= (int)$o['id_oplati'] ?>"
                             <?= (int)$paymentId === (int)$o['id_oplati'] ? 'selected' : '' ?>>
@@ -119,7 +113,7 @@ ob_start();
             <button type="submit" class="btn btn-primary btn-block">Подать заявку</button>
 
             <p class="auth-hint">
-                Заявка уже создана?<br>
+                Заявка уже есть?<br>
                 <a href="zayvki.php">Просмотреть</a>
             </p>
         </form>

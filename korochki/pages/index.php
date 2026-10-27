@@ -28,16 +28,21 @@ ob_start();
             для записи на онлайн курсы дополнительного профессионального образования.
         </p>
 
-        <div class="slider">
-            <div class="slider-track">
+        <!-- Слайдер с 4 изображениями, автопрокрутка 3 сек, только точки -->
+        <div class="slider" id="mainSlider">
+            <div class="slider-track" id="sliderTrack">
                 <img src="/DM-KOROCHKI/korochki/media/image01.webp" alt="Слайд 1">
-                <img src="/DM-KOROCHKI/korochki/media/image03.png" alt="Слайд 2">
-                <img src="/DM-KOROCHKI/korochki/media/image04.jpg" alt="Слайд 3">
+                <img src="/DM-KOROCHKI/korochki/media/image17.jpeg"  alt="Слайд 2">
+                <img src="/DM-KOROCHKI/korochki/media/image16.jpg"  alt="Слайд 3">
+                <img src="/DM-KOROCHKI/korochki/media/image05.jpg"  alt="Слайд 4">
             </div>
-            <div class="slider-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+
+            <!-- Только точки-индикаторы (без стрелок) -->
+            <div class="slider-dots" id="sliderDots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+                <span class="dot" data-slide="3"></span>
             </div>
         </div>
     </div>
